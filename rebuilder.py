@@ -150,7 +150,7 @@ def HTMLClosure():
 
 #identifyItalianGroups();
 
-outFile = open("italianDemoscene.html", "w");
+outFile = open("index.html", "w");
 
 HTMLPrelude();
 buildHTMLTable();
