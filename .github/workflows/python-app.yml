@@ -30,3 +30,9 @@ jobs:
     - name: GenFile
       run: |
         python rebuilder.py
+    - name: DeployBuild
+      run: |
+        git config --global user.name 'friol'
+        git config --global user.email 'dantonag@gmail.com'
+        git commit -am "Automated html generation"
+        git push        
