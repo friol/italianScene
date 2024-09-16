@@ -150,6 +150,7 @@ def HTMLClosure():
 
 #identifyItalianGroups();
 
+print("Rebuilding the universe...");
 outFile = open("index.html", "w");
 
 HTMLPrelude();
@@ -157,3 +158,4 @@ buildHTMLTable();
 HTMLClosure();
 
 outFile.close();
+print("Done!");
