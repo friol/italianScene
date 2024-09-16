@@ -1,5 +1,5 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+# friol was here
 
 name: Python generate Italian Demoscene html file
 
@@ -10,7 +10,7 @@ on:
     branches: [ "main" ]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -32,10 +32,7 @@ jobs:
         python rebuilder.py
     - name: DeployBuild
       run: |
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: friol
-          author_email: dantonag@gmail.com
-          message: 'Automated html'
-          add: 'index.html'
-          
+        git config --global user.name 'friol'
+        git config --global user.email 'dantonag@gmail.com'
+        git commit -am "Automated html"
+        git push
