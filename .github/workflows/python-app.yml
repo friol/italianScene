@@ -32,7 +32,10 @@ jobs:
         python rebuilder.py
     - name: DeployBuild
       run: |
-        git config --global user.name 'friol'
-        git config --global user.email 'dantonag@gmail.com'
-        git commit -am "Automated html generation"
-        git push        
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: friol
+          author_email: dantonag@gmail.com
+          message: 'Automated html'
+          add: 'index.html'
+          
