@@ -163,11 +163,11 @@ def HTMLClosure():
 #identifyItalianGroups();
 
 print("Rebuilding the universe...");
-outFile = open("index.html", "w");
+#outFile = open("index.html", "w");
 
-HTMLPrelude();
-buildHTMLTable();
-HTMLClosure();
+#HTMLPrelude();
+#buildHTMLTable();
+#HTMLClosure();
 
-outFile.close();
+#outFile.close();
 print("Done!");
