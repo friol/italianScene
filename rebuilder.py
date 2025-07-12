@@ -84,7 +84,7 @@ def buildHTMLTable():
             pageContent = mybytes.decode("utf8")
             fp.close();
         except:
-            print("Unable to reach url");
+            print("Unable to reach url ["+url2scrape+"]");
 
         pageSoup = BeautifulSoup(pageContent,features="html.parser");
         groupName=pageSoup.find("div", class_="focus_title group_name");
