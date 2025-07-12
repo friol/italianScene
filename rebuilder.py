@@ -78,17 +78,19 @@ def buildHTMLTable():
         url2scrape=l;
         #print("Visiting "+url2scrape);
 
-        pageContent="";
+        reached=False;
 
         try:
             fp = urllib.request.urlopen(url2scrape);
             mybytes = fp.read();
             pageContent = mybytes.decode("utf8")
+            reached=True;
             fp.close();
-        except:
-            print("Unable to reach url ["+url2scrape+"]");
+        except Exception as e:
+            print("Unable to reach url ["+url2scrape+"] exception: ["+repr(e)+"]");
+            reached=False;
 
-        if pageContent!="":
+        if reached==True:
 
             pageSoup = BeautifulSoup(pageContent,features="html.parser");
             groupName=pageSoup.find("div", class_="focus_title group_name");
