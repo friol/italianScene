@@ -23,9 +23,16 @@ def getDemographicData(dzid,groupName):
     url2scrape="https://demozoo.org/groups/"+dzid+"/";
 
     try:
-        fp = urllib.request.urlopen(url2scrape);
-        mybytes = fp.read();
-        pageContent = mybytes.decode("utf8")
+        req = urllib.request.Request(
+            url2scrape, 
+            data=None, 
+            headers={
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
+            }
+        )
+
+        fp = urllib.request.urlopen(req);
+        pageContent = fp.read().decode('utf-8');
         fp.close();
     except:
         return 0,0;
