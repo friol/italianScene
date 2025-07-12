@@ -78,6 +78,8 @@ def buildHTMLTable():
         url2scrape=l;
         #print("Visiting "+url2scrape);
 
+        pageContent="";
+
         try:
             fp = urllib.request.urlopen(url2scrape);
             mybytes = fp.read();
@@ -86,49 +88,50 @@ def buildHTMLTable():
         except:
             print("Unable to reach url ["+url2scrape+"]");
 
-        pageSoup = BeautifulSoup(pageContent,features="html.parser");
-        groupName=pageSoup.find("div", class_="focus_title group_name");
-        if groupName==None:
-            groupName=pageSoup.find("div", class_="focus_title scener_name");
-        gName=str(groupName.find("h2")).replace("<h2>","").replace("</h2>","");
-        #print(gName);
+        if pageContent!="":
 
-        #
+            pageSoup = BeautifulSoup(pageContent,features="html.parser");
+            groupName=pageSoup.find("div", class_="focus_title group_name");
+            if groupName==None:
+                groupName=pageSoup.find("div", class_="focus_title scener_name");
+            gName=str(groupName.find("h2")).replace("<h2>","").replace("</h2>","");
+            #print(gName);
 
-        # ok, in HTML now
+            #
 
-        outFile.write("<tr>");
-        outFile.write("<td width=20%><a target=\"_blank\" href='"+url2scrape+"'>"+gName+"</a>");
-        outFile.write("<td><table class=\"innerTable\">");
+            # ok, in HTML now
 
-        prodsDiv=pageSoup.find('div', attrs={'id':'main_column'})
-        table=prodsDiv.find('table');
-        rows = table.find_all('tr')
-        for row in rows:
             outFile.write("<tr>");
-            cols = row.find_all('td');
-            cols = [ele.text.strip() for ele in cols];
+            outFile.write("<td width=20%><a target=\"_blank\" href='"+url2scrape+"'>"+gName+"</a>");
+            outFile.write("<td><table class=\"innerTable\">");
 
-            colnum=0;
-            for c in cols:
-                if (colnum!=0) and (colnum!=2) and (c!=""):
-                    if (colnum==1):
-                        outFile.write("<td width=80%>");
-                    else:
-                        outFile.write("<td width=20%>");
-                    if (colnum==1):
-                        c="<b>"+c;
-                        c=c.replace("\n\n\n","</b>");
-                    outFile.write(c);
-                    outFile.write("</td>");
-                colnum+=1;
+            prodsDiv=pageSoup.find('div', attrs={'id':'main_column'})
+            table=prodsDiv.find('table');
+            rows = table.find_all('tr')
+            for row in rows:
+                outFile.write("<tr>");
+                cols = row.find_all('td');
+                cols = [ele.text.strip() for ele in cols];
+
+                colnum=0;
+                for c in cols:
+                    if (colnum!=0) and (colnum!=2) and (c!=""):
+                        if (colnum==1):
+                            outFile.write("<td width=80%>");
+                        else:
+                            outFile.write("<td width=20%>");
+                        if (colnum==1):
+                            c="<b>"+c;
+                            c=c.replace("\n\n\n","</b>");
+                        outFile.write(c);
+                        outFile.write("</td>");
+                    colnum+=1;
+                outFile.write("</tr>");
+
+            outFile.write("</table></td>");
             outFile.write("</tr>");
-
-        outFile.write("</table></td>");
-        outFile.write("</tr>");
     
         linesCounter+=1;
-
 
     outFile.write("</table>");
 
