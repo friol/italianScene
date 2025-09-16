@@ -17,9 +17,6 @@ def getDemographicData(dzid,groupName):
     numTotalMembers=0;
     numItalianMembers=0;
 
-    # https://demozoo.org/groups/11518/
-    # scrape url
-
     url2scrape="https://demozoo.org/groups/"+dzid+"/";
 
     try:
@@ -27,7 +24,7 @@ def getDemographicData(dzid,groupName):
             url2scrape, 
             data=None, 
             headers={
-                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36'
             }
         )
 
@@ -62,6 +59,7 @@ def identifyItalianGroups():
     for group in jsonGroups["groups"]:
         demozooId=str(group["demozoo"]);
         if (demozooId!="0") and (demozooId!="None"):
+            print("scraping "+demozooId);
             numComponents,italianComponents=getDemographicData(demozooId,group["name"]);
             i+=1;
     
@@ -88,7 +86,17 @@ def buildHTMLTable():
         reached=False;
 
         try:
-            fp = urllib.request.urlopen(url2scrape);
+            req = urllib.request.Request(
+                url2scrape, 
+                data=None, 
+                headers={
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36'
+                }
+            )
+
+            fp = urllib.request.urlopen(req);
+
+            # fp = urllib.request.urlopen(url2scrape);
             mybytes = fp.read();
             pageContent = mybytes.decode("utf8")
             reached=True;
@@ -163,11 +171,11 @@ def HTMLClosure():
 #identifyItalianGroups();
 
 print("Rebuilding the universe...");
-#outFile = open("index.html", "w");
+outFile = open("index.html", "w");
 
-#HTMLPrelude();
-#buildHTMLTable();
-#HTMLClosure();
+HTMLPrelude();
+buildHTMLTable();
+HTMLClosure();
 
-#outFile.close();
+outFile.close();
 print("Done!");
